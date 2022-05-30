@@ -1,7 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
-from datetime import datetime, timedelta
+from datetime import timedelta
+from django.utils import timezone
+
+
+def _get_datetime():
+    return timezone.now() + timedelta(hours=24)
 
 
 class Task(models.Model):
@@ -17,7 +22,7 @@ class Task(models.Model):
     important = models.BooleanField(default=False, verbose_name='Важная')
     create_at = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
     update_at = models.DateTimeField(auto_now=True, verbose_name='Время изменения')
-    execution_time = models.DateTimeField(default=(datetime.now() + timedelta(hours=24)), verbose_name='Срок выполнения')
+    execution_time = models.DateTimeField(default=_get_datetime, verbose_name='Срок выполнения')
     authors = models.ManyToManyField(User)
 
     def __str__(self):
@@ -34,7 +39,7 @@ class Task(models.Model):
 
 class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='comments')
     comment = models.TextField(default='', verbose_name='Текст')
 
     def __str__(self):
