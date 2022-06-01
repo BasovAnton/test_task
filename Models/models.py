@@ -15,7 +15,7 @@ class Task(models.Model):
         ACTIVE = 1, _('Активна')
         POSTPONED = 2, _('Отложена')
         COMPLETED = 3, _('Выполнена')
-    title = models.CharField(max_length=255, verbose_name=_('Заголовок'))
+    title = models.CharField(max_length=255, verbose_name='Заголовок')
     text = models.TextField(default='', verbose_name='Текст')
     status = models.IntegerField(default=Status.ACTIVE, choices=Status.choices, verbose_name='Статус')
     public = models.BooleanField(default=False, verbose_name='Публиная')
