@@ -17,16 +17,16 @@ class Task(models.Model):
         COMPLETED = 3, _('Выполнена')
     title = models.CharField(max_length=255, verbose_name='Заголовок')
     text = models.TextField(default='', verbose_name='Текст')
-    status = models.IntegerField(default=Status.ACTIVE, choices=Status.choices, verbose_name='Статус')
-    public = models.BooleanField(default=False, verbose_name='Публиная')
     important = models.BooleanField(default=False, verbose_name='Важная')
+    public = models.BooleanField(default=False, verbose_name='Публиная')
+    status = models.IntegerField(default=Status.ACTIVE, choices=Status.choices, verbose_name='Статус')
     create_at = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
     update_at = models.DateTimeField(auto_now=True, verbose_name='Время изменения')
     execution_time = models.DateTimeField(default=_get_datetime, verbose_name='Срок выполнения')
     authors = models.ManyToManyField(User)
 
     def __str__(self):
-        return f"Запись №{self.id}"
+        return f"Запись № {self.id}"
 
     class Meta:
         verbose_name = _("Задача")
