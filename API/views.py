@@ -49,10 +49,6 @@ class UserTasksListAPIView(generics.ListAPIView):
     serializer_class = serializers.TaskSerializer
     permission_classes = [IsAuthenticated]
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        return queryset
-
     def filter_queryset(self, queryset):
         query_params = serializers.QueryParamsFilterSerializer(data=self.request.query_params)
         query_params.is_valid(raise_exception=True)
